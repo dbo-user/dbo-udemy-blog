@@ -1,24 +1,25 @@
-import React, {useState} from 'react';
+import createDataContext from './createDataContext';
 
 // This is the Blog Post Provider in the diagram
+// uses reducer video 132
 
-const BlogContext = React.createContext(); // create context object used to move info to BlogList
-// context object comes with a provider that makes info available to all child components
-
-// children props makes data available to other child components
-export const BlogProvider = ({children}) => {
-    //blogPosts is a state variable and anytime it changes he entire site will rerender
-    const [blogPosts, setBlogPosts] = useState([]);
-
-    const addBlogPost = () => {
-        setBlogPosts([...blogPosts, {title: `Blog Post #${blogPosts.length + 1}`}]); // create new array and put all of the current blogs inside
+const blogReducer = (state, action) => {
+    switch (action.type){
+        case 'add_blogpost':
+            return [...state, {title: `Blog Post #${state.length + 1}`}]
+        default:
+            return state;
     }
+}; // end blogReducer
 
-    return ( // return this back to the Index Screen
-        <BlogContext.Provider value={{data: blogPosts, addBlogPost: addBlogPost}}>
-            {children}
-        </BlogContext.Provider>
-    );
-}; // end BlogProvider
+const addBlogPost = (dispatch) => {
+    return () => {
+        dispatch({ type: 'add_blogpost'}); // action type for case statment
+    }
+}; // end addBlogPost
 
-export default BlogContext;
+export const { Context, Provider} = createDataContext(
+    blogReducer,
+     { addBlogPost },
+      []
+);
