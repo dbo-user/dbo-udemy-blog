@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
-import BlogContext from '../context/BlogContext';
+import {Context} from '../context/BlogContext';
 
 // Context is used to move data around
 
 const IndexScreen = () => {
     // recieve from Blog Context (the Provider)
-    const {data, addBlogPost} = useContext(BlogContext); // get BlogContext data
+    const {state, addBlogPost} = useContext(Context); // get BlogContext data
     return (
         <View>
             <Text>Index Screen</Text>
@@ -15,7 +15,7 @@ const IndexScreen = () => {
                 onPress={() => addBlogPost()} // or onPress={addBlogPost}
             />
             <FlatList 
-                data={data} // data is the list of blog posts
+                data={state} // state is the list of blog posts
                 keyExtractor={(blogPost) => blogPost.title}
                 renderItem={({item}) => {
                     return <Text>{item.title}</Text>
