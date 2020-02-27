@@ -9,8 +9,12 @@ const blogReducer = (state, action) => {
             return state.filter(blogPost => blogPost.id !== action.payload);
         case 'add_blogpost':
             return [...state,
-                 {id: Math.floor(Math.random() * 99999),
-                     title: `Blog Post #${state.length + 1}`}]
+                {id: Math.floor(Math.random() * 99999),
+                     title: action.payload.title,
+                     //`Blog Post #${state.length + 1}`}]
+                     content: action.payload.content
+                }
+            ];    
         default:
             return state;
     }
@@ -19,8 +23,8 @@ const blogReducer = (state, action) => {
 // dispatch an action to change the state of an object
 const addBlogPost = (dispatch) => {
     // return a new function
-    return () => {
-        dispatch({ type: 'add_blogpost'}); // action type for case statment
+    return (title, content) => { // receive title and content from createscreen
+        dispatch({ type: 'add_blogpost', payload: {title, content}}); // action type for case statment
     }
 }; // end addBlogPost
 
