@@ -17,21 +17,35 @@ const CreateScreen = ({ navigation }) => {
             <TextInput 
                 style={styles.inputStyle} 
                 value={title} // update title with new text title
-                onChangeText={(text) => setTitle(text)}/>
+                onChangeText={(text) => setTitle(text)}
+            />
+
             <Text style={styles.labelStyle}>Enter Content:</Text>
             <TextInput 
                 style={styles.inputStyle} 
                 value={content} // update content wth new text content
-                onChangeText={(text) => setContent(text)} />
-
+                onChangeText={(text) => setContent(text)} 
+            />
+            <View style={styles.buttonStyle}>
                 <Button 
                     title='Add Blog Post'
-                    onPress={() => addBlogPost(title,content)} // addBlogPost from BlogContext passing title and content
+                    onPress={() => // addBlogPost from BlogContext passing title and content
+                        addBlogPost(title,content, () => {
+                        navigation.navigate('Index'); // go back to index screen after adding new blogpost
+                    })} 
                     />
+            </View>
 
         </View>
     );
-}; // end ShowScreen
+}; // end CreateScreen
+
+CreateScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerStyle: { backgroundColor: 'red' },
+        title: 'Create Blogpost'
+    }; // end return
+}; // end navigationOptions
 
 const styles = StyleSheet.create({
     inputStyle: {
@@ -47,6 +61,9 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginBottom: 5,
         marginLeft: 5
+    },
+    buttonStyle: {
+        margin: 20
     }
 });
 

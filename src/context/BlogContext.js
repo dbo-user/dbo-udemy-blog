@@ -9,7 +9,7 @@ const blogReducer = (state, action) => {
             return state.filter(blogPost => blogPost.id !== action.payload);
         case 'add_blogpost':
             return [...state,
-                {id: Math.floor(Math.random() * 99999),
+                {id: Math.floor(Math.random() * 99999), // id will be integer from 0 to 99,998
                      title: action.payload.title,
                      //`Blog Post #${state.length + 1}`}]
                      content: action.payload.content
@@ -22,9 +22,10 @@ const blogReducer = (state, action) => {
 
 // dispatch an action to change the state of an object
 const addBlogPost = (dispatch) => {
-    // return a new function
-    return (title, content) => { // receive title and content from createscreen
-        dispatch({ type: 'add_blogpost', payload: {title, content}}); // action type for case statment
+    // return a new function also the callback will go back to createscreen so it can navigate to indexscreen
+    return (title, content, callback) => { // receive title and content from createscreen
+        dispatch({ type: 'add_blogpost', payload: {title, content} } ); // action type for case statment
+        callback(); // go back to createscreen
     }
 }; // end addBlogPost
 
