@@ -16,8 +16,10 @@ const ShowScreen = ({ navigation }) => {
 
     return (
         <View>
-            <Text>Blog: { blogPost.title }</Text>
-            <Text>Content: { blogPost.content }</Text>
+            <Text style={styles.labelStyle} >Blog:</Text>
+            <Text style={styles.inputStyle} >{ blogPost.title }</Text>
+            <Text style={styles.labelStyle} >Content:</Text>
+            <Text style={styles.inputStyle} >{ blogPost.content }</Text>
         </View>
     );
 }; // end ShowScreen
@@ -37,6 +39,20 @@ ShowScreen.navigationOptions = ({ navigation }) => {
 }; // end navigationOptions
 
 const styles = StyleSheet.create({
+    inputStyle: {
+        fontSize:18,
+        borderWidth: 1,
+        borderColor: 'black',
+        marginBottom: 15,
+        padding: 5,
+        margin: 5
+    },
+    labelStyle: {
+        fontSize: 20,
+        marginTop: 5,
+        marginBottom: 5,
+        marginLeft: 5
+    },
     iconPencilStyle :{
         marginRight: 10,
         fontSize: 35
