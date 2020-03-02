@@ -1,13 +1,28 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import {Context} from '../context/BlogContext';
 import {Feather} from '@expo/vector-icons';
 
-// Context is used to move data around
+// Context is used to move data around the app
 
 const IndexScreen = ({ navigation }) => {
     // recieve from Blog Context (the Provider)
-    const {state, deleteBlogPost} = useContext(Context); // get BlogContext data
+    const {state, deleteBlogPost, getBlogPosts} = useContext(Context); // get BlogContext data
+
+    // useEffect hook runs only one time when component is first rendered
+    useEffect(() => {
+        getBlogPosts(); // runs getBlogPosts one time on BlogContext.js
+
+        const listener = navigation.addListener('didFocus', () => {
+            getBlogPosts(); // runs getBlogPosts whenever the Index screen is the main focus so it will get new blogs from server
+        });
+
+        return () => {
+            listener.remove(); // will only run and remove the listner when the app is completely closed, stops memory leak of system
+        };
+
+    }, []) // empty array means run this only one time when component first shows up
+
     return (
         <View>
             

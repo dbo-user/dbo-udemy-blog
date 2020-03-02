@@ -1,10 +1,13 @@
 import React, {useReducer} from 'react';
 
+// makes data available to the entire app
+
 // re-usable function that receives 3 things-  a reducer function, a dispatch action, an initialState
 export default (reducer, actions, initialState) => {
     // will return a context object and a provider function on line 16
     const Context = React.createContext();
 
+    // provider manages data
     const Provider = ({ children }) => {
         const [state, dispatch] = useReducer(reducer, initialState);
         
